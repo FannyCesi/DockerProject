@@ -20,19 +20,19 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'videgrenierenligne';
+    const DB_NAME = 'docker';
 
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'webapplication';
+    const DB_USER = 'root';
 
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = '653rag9T';
+    const DB_PASSWORD = '';
 
     /**
      * Show or hide error messages on screen
