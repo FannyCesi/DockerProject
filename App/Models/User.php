@@ -42,7 +42,9 @@ class User extends Model {
         $stmt->bindParam(':email', $login);
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);     
+
+
     }
 
 

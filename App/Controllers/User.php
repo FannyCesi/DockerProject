@@ -49,13 +49,16 @@ class User extends \Core\Controller
                 // TODO: Gestion d'erreur côté utilisateur
             }
 
-            // validation
+            
 
             $this->register($f);
             // TODO: Rappeler la fonction de login pour connecter l'utilisateur
         }
 
         View::renderTemplate('User/register.html');
+
+
+        
     }
 
     /**

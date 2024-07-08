@@ -50,6 +50,9 @@ label {
 .color-active {
   color: #ea2c5a; }
 
+.color-etoile {
+  color: rgb(211, 14, 14); }
+  
 .padding-def {
   padding: 70px 0; }
 
