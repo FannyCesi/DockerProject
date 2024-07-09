@@ -1,5 +1,5 @@
 <?php
-
+/**./vendor/bin/phpunit */
 use PHPUnit\Framework\TestCase;
 use App\Models\User;
 use Core\Model;
