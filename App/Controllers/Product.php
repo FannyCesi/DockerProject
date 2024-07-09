@@ -4,22 +4,20 @@ namespace App\Controllers;
 
 use App\Models\Articles;
 use App\Utility\Upload;
-use \Core\View;
+use Core\View;
 
 /**
  * Product controller
  */
-class Product extends \Core\Controller
-{
+class Product extends \Core\Controller {
 
     /**
      * Affiche la page d'ajout
      * @return void
      */
-    public function indexAction()
-    {
+    public function indexAction() {
 
-        if(isset($_POST['submit'])) {
+        if (isset($_POST['submit'])) {
 
             try {
                 $f = $_POST;
@@ -34,8 +32,8 @@ class Product extends \Core\Controller
                 Articles::attachPicture($id, $pictureName);
 
                 header('Location: /product/' . $id);
-            } catch (\Exception $e){
-                    var_dump($e);
+            } catch (\Exception $e) {
+                var_dump($e);
             }
         }
 
@@ -46,15 +44,14 @@ class Product extends \Core\Controller
      * Affiche la page d'un produit
      * @return void
      */
-    public function showAction()
-    {
+    public function showAction() {
         $id = $this->route_params['id'];
 
         try {
             Articles::addOneView($id);
             $suggestions = Articles::getSuggest();
             $article = Articles::getOne($id);
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             var_dump($e);
         }
 
@@ -63,4 +60,29 @@ class Product extends \Core\Controller
             'suggestions' => $suggestions
         ]);
     }
+    /**
+     * Affiche la page de contact réussi
+     * @return void
+     */
+    public function contactSuccessAction() {
+        View::renderTemplate('Product/Contact.html');
+
+}
+
+    /**
+     * Handle the contact form submission
+     * @return void
+     */
+    // public function contactAction() {
+    //     if (isset($_POST['sellerEmail']) && isset($_POST['message'])) {
+    //         $sellerEmail = $_POST['sellerEmail'];
+    //         $message = $_POST['message'];
+
+    //         // TODO: Send email logic here
+
+    //         header('Location: /product/contact_success');
+    //     } else {
+    //         header('Location: /product/contact_error');
+    //     }
+    // }
 }
