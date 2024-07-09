@@ -9,7 +9,7 @@ final class FileInputTest extends TestCase
     public function testFileInputIsRequired(): void
     {
         // Chemin vers le formulaire
-        $htmlFilePath = 'C:\\wamp64\\www\\DockerProject\\App\\Views\\Product\\Add.html';
+        $htmlFilePath = '/var/www/html/App/Views/Product/Add.html';
         // Charge le contenu HTML du fichier
         $htmlContent = file_get_contents($htmlFilePath);
         // Parcoure le HTML fourni
