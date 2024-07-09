@@ -25,3 +25,9 @@ services:
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
+  node-styles:
+    build:
+      context: ../
+      dockerfile: ./Docker/node/Dockerfile
+    volumes:
+      - ../:/var/www/html
