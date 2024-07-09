@@ -2,7 +2,9 @@
 version: '3'
 services:
   www:
-    build: ./apache
+    build:
+      context: ../
+      dockerfile: ./Docker/apache/Dockerfile.dev
     volumes:
       - ../:/var/www/html
     ports:
