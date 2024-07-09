@@ -1,3 +1,4 @@
+#docker-compose -f docker-compose-preprod.yml up
 version: '3'
 services:
   www:
