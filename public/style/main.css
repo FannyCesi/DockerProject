@@ -41,6 +41,13 @@ a {
 .form-group {
   margin-bottom: 25px; }
 
+
+.spaced-button {
+    margin-top: 10px;
+    margin-left: 15px; 
+    }
+
+
 label {
   margin-bottom: 10px; }
 

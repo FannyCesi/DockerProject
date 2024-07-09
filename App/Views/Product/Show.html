@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-8 col-xs-12 col-sm-12">
                 <div class="preview-article">
-                    <img src="{{ ('/storage/' ~ article.picture) }}"/>
+                    <img src="{{ ('/storage/' ~ article.picture) }}" />
                 </div>
                 <h1><a href="#">{{ article.name }}</a></h1>
 
@@ -19,7 +19,6 @@
                             <div><a href="#">{{ article.username }}</a></div>
                         </div>
                     </div>
-
                     <div class="author-border"></div>
                     <div class="sv-views">
                         <div class="sv-views-count">
@@ -34,30 +33,33 @@
                         <p>{{ article.description }}</p>
                     </div>
                     <div class="u-area mt-small">
-                        <a name="submit" href="mailto:{{ article.email }}" class="btn btn-primary u-btn">Contacter {{ article.username }}</a>
+                        <a href="mailto:{{ article.email }}" class="btn btn-primary u-btn">Contacter {{ article.username }}</a>
                     </div>
                 </div>
 
-                {% if article.user_id == session_user_id %}
-                <div class="edit-article mt-40">
-                    <h3>Modifier l'article</h3>
-                    <form method="POST" action="/product/{{ article.id }}/edit" enctype="multipart/form-data">
+                {% if isLoggedIn and isOwner %}
+                <div class="article-actions mt-4">
+                    <button class="btn btn-secondary spaced-button" onclick="toggleEditForm()">Modifier</button>
+                    <form id="delete-form" action="/product/{{ article.id }}/delete" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger spaced-button">Supprimer</button>
+                    </form>
+                </div>
+
+                <div id="edit-form" style="display:none;" class="mt-4">
+                    <form id="edit-form-data" action="/product/{{ article.id }}/edit" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="name">Titre</label>
-                            <input type="text" id="name" name="name" class="form-control" value="{{ article.name }}" required>
+                            <label for="name">Nom de l'article</label>
+                            <input type="text" name="name" class="form-control" value="{{ article.name }}">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea id="description" name="description" class="form-control" required>{{ article.description }}</textarea>
+                            <textarea name="description" class="form-control">{{ article.description }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="picture">Image</label>
-                            <input type="file" id="picture" name="picture" class="form-control">
+                            <input type="file" name="picture" class="form-control">
                         </div>
-                        <button type="submit" name="update" class="btn btn-success">Mettre à jour</button>
-                    </form>
-                    <form method="POST" action="/product/{{ article.id }}/delete" class="mt-20">
-                        <button type="submit" name="delete" class="btn btn-danger">Supprimer l'article</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Mettre à jour</button>
                     </form>
                 </div>
                 {% endif %}
@@ -86,5 +88,60 @@
         </div>
     </div>
 </div>
+
+<script>
+function toggleEditForm() {
+    var form = document.getElementById('edit-form');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+document.getElementById('edit-form-data').onsubmit = function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+    fetch(this.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            alert(data.message);
+            setTimeout(() => {
+                window.location.href = '/account';
+            }, 1000);  // Réduction du délai de redirection
+        } else if (data.error) {
+            alert(data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Une erreur est survenue.');
+    });
+};
+
+document.getElementById('delete-form').onsubmit = function(event) {
+    event.preventDefault();
+    if (confirm('Êtes-vous sûr de vouloir supprimer cet article ?')) {
+        fetch(this.action, {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                setTimeout(() => {
+                    window.location.href = '/account';
+                }, 1000);  // Réduction du délai de redirection
+            } else if (data.error) {
+                alert(data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Une erreur est survenue.');
+        });
+    }
+};
+</script>
 
 {% endblock body %}

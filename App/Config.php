@@ -14,25 +14,25 @@ class Config
      * Database host
      * @var string
      */
-    const DB_HOST = 'db';
+    const DB_HOST = 'localhost';
 
     /**
      * Database name
      * @var string
      */
-    const DB_NAME = 'videgrenierenligne';
+    const DB_NAME = 'docker';
 
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'php_docker';
+    const DB_USER = 'root';
 
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = 'password';
+    const DB_PASSWORD = '';
 
     /**
      * Show or hide error messages on screen
