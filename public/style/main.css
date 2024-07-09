@@ -1271,11 +1271,47 @@ ul.menu {
 
 .loginsignup {
   text-align: right;
-  margin-top: 25px; }
+  display: flex;
+  justify-content: center;
+  color: #fff;
+ gap: 10px;
+  margin-top: 15px; 
+
+}
+.loginsignup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: auto;
+   
+}
+
+.loginsignup a {
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.loginsignup a.connexion {
+  background-color: #ea2c5a;
+}
+.loginsignup a.inscription {
+  background-color: #ea2c5a;
+}
+
+@media (max-width: 767px) {
+  .loginsignup {
+      flex-direction: column;
+
+      align-items: center;
+  }
+}
+
   .loginsignup a {
-    color: #637076; }
+    color: #fff; }
     .loginsignup a:hover {
-      text-decoration: underline; }
+      background-color: #971a3c;
+    }
 
 .navbar-brand {
   padding: 12px 15px; }
