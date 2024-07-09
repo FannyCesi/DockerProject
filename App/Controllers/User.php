@@ -9,20 +9,23 @@ use App\Utility\Hash;
 use App\Utility\Session;
 use \Core\View;
 use Exception;
-use http\Env\Request;
-use http\Exception\InvalidArgumentException;
 
 /**
  * User controller
  */
 class User extends \Core\Controller
 {
-
     /**
      * Affiche la page de login
      */
     public function loginAction()
     {
+        // Vérifie si l'utilisateur est déjà connecté
+        if ($this->isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
         if(isset($_POST['submit'])){
             $f = $_POST;
 
@@ -32,6 +35,7 @@ class User extends \Core\Controller
 
             // Si login OK, redirige vers le compte
             header('Location: /account');
+            exit;
         }
 
         View::renderTemplate('User/login.html');
@@ -42,6 +46,12 @@ class User extends \Core\Controller
      */
     public function registerAction()
     {
+        // Vérifie si l'utilisateur est déjà connecté
+        if ($this->isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
         if(isset($_POST['submit'])){
             $f = $_POST;
 
@@ -49,16 +59,15 @@ class User extends \Core\Controller
                 // TODO: Gestion d'erreur côté utilisateur
             }
 
-            
-
             $this->register($f);
             // TODO: Rappeler la fonction de login pour connecter l'utilisateur
+
+            // Redirection après l'inscription réussie
+            header('Location: /account');
+            exit;
         }
 
         View::renderTemplate('User/register.html');
-
-
-        
     }
 
     /**
@@ -66,6 +75,12 @@ class User extends \Core\Controller
      */
     public function accountAction()
     {
+        // Vérifie si l'utilisateur n'est pas connecté
+        if (!$this->isLoggedIn()) {
+            header('Location: /login');
+            exit;
+        }
+
         $articles = Articles::getByUser($_SESSION['user']['id']);
 
         View::renderTemplate('User/account.html', [
@@ -74,7 +89,7 @@ class User extends \Core\Controller
     }
 
     /*
-     * Fonction privée pour enregister un utilisateur
+     * Fonction privée pour enregistrer un utilisateur
      */
     private function register($data)
     {
@@ -127,6 +142,13 @@ class User extends \Core\Controller
         }
     }
 
+    /**
+     * Vérifie si l'utilisateur est connecté
+     */
+    private function isLoggedIn()
+    {
+        return isset($_SESSION['user']);
+    }
 
     /**
      * Logout: Delete cookie and session. Returns true if everything is okay,
@@ -136,7 +158,6 @@ class User extends \Core\Controller
      * @since 1.0.2
      */
     public function logoutAction() {
-
         /*
         if (isset($_COOKIE[$cookie])){
             // TODO: Delete the users remember me cookie if one has been stored.
