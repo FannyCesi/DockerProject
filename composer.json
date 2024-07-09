@@ -2,12 +2,17 @@
     "require": {
         "twig/twig": "~3.0",
       "ext-pdo": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+        "symfony/dom-crawler": "^5.4",
+        "symfony/css-selector": "^5.4"
     },
     "autoload": {
         "psr-4": {
             "Core\\": "Core/",
             "App\\": "App/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     }
 }
