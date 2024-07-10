@@ -1293,10 +1293,10 @@ ul.menu {
 }
 
 .loginsignup a.connexion {
-  background-color: #ea2c5a;
+  background-color: #dfa25e;
 }
 .loginsignup a.inscription {
-  background-color: #ea2c5a;
+  background-color: #dfa25e;
 }
 
 @media (max-width: 767px) {
@@ -1310,7 +1310,7 @@ ul.menu {
   .loginsignup a {
     color: #fff; }
     .loginsignup a:hover {
-      background-color: #971a3c;
+      background-color: #dfa25e;
     }
 
 .navbar-brand {
