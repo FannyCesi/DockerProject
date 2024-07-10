@@ -18,7 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN apt update && apt install libzip-dev -y && docker-php-ext-install zip
 
-COPY . .
+COPY ../../ .
 
 RUN composer install
 
