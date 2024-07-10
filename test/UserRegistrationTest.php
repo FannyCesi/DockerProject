@@ -1,5 +1,7 @@
 <?php
-/**./vendor/bin/phpunit */
+/**
+ * docker exec -it docker-www-1 bash
+ * ./vendor/bin/phpunit */
 use PHPUnit\Framework\TestCase;
 use App\Models\User;
 use Core\Model;
