@@ -4,12 +4,11 @@ namespace App\Models;
 
 use App\Utility\Hash;
 use Core\Model;
-use App\Core;
+use PDO;
 use Exception;
-use App\Utility;
 
 /**
- * User Model:
+ * Modèle User :
  */
 class User extends Model {
 
@@ -19,7 +18,7 @@ class User extends Model {
     public static function createUser($data) {
         $db = static::getDB();
 
-        $stmt = $db->prepare('INSERT INTO users(username, email, password, salt) VALUES (:username, :email, :password,:salt)');
+        $stmt = $db->prepare('INSERT INTO users(username, email, password, salt) VALUES (:username, :email, :password, :salt)');
 
         $stmt->bindParam(':username', $data['username']);
         $stmt->bindParam(':email', $data['email']);
@@ -31,36 +30,34 @@ class User extends Model {
         return $db->lastInsertId();
     }
 
-    public static function getByLogin($login)
-    {
+    /**
+     * Récupère un utilisateur par login
+     */
+    public static function getByLogin($login) {
         $db = static::getDB();
 
-        $stmt = $db->prepare("
-            SELECT * FROM users WHERE ( users.email = :email) LIMIT 1
-        ");
+        $stmt = $db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
 
         $stmt->bindParam(':email', $login);
         $stmt->execute();
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-
     /**
-     * ?
+     * Connecte un utilisateur
+     * @param int $id
      * @access public
-     * @return string|boolean
+     * @return array|boolean
      * @throws Exception
      */
-    public static function login() {
+    public static function login($id) {
         $db = static::getDB();
 
-        $stmt = $db->prepare('SELECT * FROM articles WHERE articles.id = ? LIMIT 1');
+        $stmt = $db->prepare('SELECT * FROM users WHERE id = ? LIMIT 1');
 
         $stmt->execute([$id]);
 
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
-
 }

@@ -14,7 +14,7 @@ class Config
      * Database host
      * @var string
      */
-    const DB_HOST = 'localhost';
+    const DB_HOST = 'db';
 
     /**
      * Database name
@@ -26,13 +26,13 @@ class Config
      * Database user
      * @var string
      */
-    const DB_USER = 'webapplication';
+    const DB_USER = 'php_docker';
 
     /**
      * Database password
      * @var string
      */
-    const DB_PASSWORD = '653rag9T';
+    const DB_PASSWORD = 'password';
 
     /**
      * Show or hide error messages on screen

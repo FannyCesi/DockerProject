@@ -49,10 +49,16 @@ class User extends \Core\Controller
                 // TODO: Gestion d'erreur côté utilisateur
             }
 
-            // validation
+            $userID = $this->register($f);
 
-            $this->register($f);
-            // TODO: Rappeler la fonction de login pour connecter l'utilisateur
+            if ($userID) {
+                // Connecter l'utilisateur après une inscription réussie
+                $this->login($f);
+
+                // Rediriger vers /account
+                header('Location: /account');
+                exit();
+            }
         }
 
         View::renderTemplate('User/register.html');
@@ -71,7 +77,7 @@ class User extends \Core\Controller
     }
 
     /*
-     * Fonction privée pour enregister un utilisateur
+     * Fonction privée pour enregistrer un utilisateur
      */
     private function register($data)
     {
@@ -93,6 +99,8 @@ class User extends \Core\Controller
             // TODO : Set flash if error : utiliser la fonction en dessous
             /* Utility\Flash::danger($ex->getMessage());*/
         }
+
+        return false;
     }
 
     private function login($data){
@@ -122,8 +130,9 @@ class User extends \Core\Controller
             // TODO : Set flash if error
             /* Utility\Flash::danger($ex->getMessage());*/
         }
-    }
 
+        return false;
+    }
 
     /**
      * Logout: Delete cookie and session. Returns true if everything is okay,

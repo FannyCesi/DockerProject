@@ -1,0 +1,33 @@
+#docker-compose -f docker-compose-dev.yml up
+version: '3'
+services:
+  www:
+    build:
+      context: ../
+      dockerfile: ./Docker/apache/Dockerfile.dev
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - 82:80
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=videgrenierenligne
+      - MYSQL_USER=php_docker
+      - MYSQL_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    volumes:
+      - ../sql:/docker-entrypoint-initdb.d
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8201:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+  node-styles:
+    build:
+      context: ../
+      dockerfile: ./Docker/node/Dockerfile
+    volumes:
+      - ../:/var/www/html
